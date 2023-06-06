@@ -1,5 +1,13 @@
 # Weather Report
 
+Co-Working Agreement
+
+- we're both guess culture
+- learning style: need more time to read the instructions
+- both prefer direct feedback
+- we'd like to have good communication throughout the project
+  
+
 ## Skills Assessed
 
 - Following directions and reading comprehension
@@ -121,3 +129,4 @@ Wave 6:
 [Wave 6: Resetting the City Name](./ada-project-docs/wave-06.md)
 
 [Optional Enhancements to inspire you](./ada-project-docs/optional-enhancements.md)
+
