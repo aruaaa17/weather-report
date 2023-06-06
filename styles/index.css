@@ -5,7 +5,7 @@ body {
     grid-gap: 1rem;
     font-family: "Rubik", sans-serif;
     font-size: 18px;
-    background-color: #1b69f9;
+    background-color: #576CBC;
     margin: 2rem;
     }
 
@@ -18,7 +18,7 @@ h2 {
 }
 
 .header__header {
-    color: black;
+    color: white;
     grid-column: span 3;
     display: flex;
     align-items: center;
@@ -38,6 +38,10 @@ h2 {
 .header__city-name::before,
 .header__city-name::after {
     content: "🌝";
+}
+
+.header__city-name::before {
+    content: "🌚";
 }
 
 .sky__container {
@@ -71,25 +75,6 @@ h2 {
 #tempButton {
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 .garden__section {
 grid-row: 2 / span 3;
