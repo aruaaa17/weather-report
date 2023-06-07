@@ -72,6 +72,27 @@ h2 {
     background-color: white;
 }
 
+.red {
+    color: red
+}
+
+.orange {
+    color:orange
+}
+
+.yellow {
+    color: yellow;
+}
+
+.green {
+    color: green
+}
+
+.light-blue {
+    color: rgb(180, 214, 255)
+}
+
+
 #tempButton {
 
 }
