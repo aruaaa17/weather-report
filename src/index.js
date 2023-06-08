@@ -84,6 +84,18 @@ const convertKToF = (temp) => {
     return (temp-273.15) * 9/5 + 32;
 }
 
+const changeSky = () => {
+    if (skySelection.option.innerHTML === "Sunny") {
+        sky.innerHTML = "☁️ ☁️ ☁️ ☀️ ☁️ ☁️";
+    } else if (skySelection.option.innerHTML === "Cloudy") {
+        sky.innerHTML = "☁️☁️ ☁️ ☁️☁️ ☁️ 🌤 ☁️ ☁️☁️";
+    } else if (skySelection.option.innerHTML === "Rainy") {
+        sky.innerHTML = "🌧🌈⛈🌧🌧💧⛈🌧🌦🌧💧🌧🌧";
+    } else {
+        sky.innerHTML = "🌨❄️🌨🌨❄️❄️🌨❄️🌨❄️❄️🌨🌨";
+    }
+};
+
 const registerEventHandlers = () => {
     // Select increment and decrement buttons
     const incrementTemp = document.getElementById("increaseTempControl");
@@ -94,9 +106,12 @@ const registerEventHandlers = () => {
     const cityNameInput = document.querySelector("#cityNameInput");
     const headerCityName = document.querySelector("#headerCityName");
 
-    // // Select the Get Realtime Temperature button
+    // Select the Get Realtime Temperature button
     const realtimeTemp = document.querySelector("#tempButton");
 
+    // Select the drop down menu for the sky
+    const skySelection = document.querySelector("#skySelect");
+    
     // Add click event to buttons
     incrementTemp.addEventListener("click", increaseTemp);
     decrementTemp.addEventListener("click", decreaseTemp);
@@ -107,6 +122,8 @@ const registerEventHandlers = () => {
     cityNameInput.addEventListener("input", function(event) {
     // Code to execute when text is typed or changed in the input box
     headerCityName.innerHTML = event.target.value;
+    // Change the sky when user selects a sky option in the dropdown menu
+    skySelection.addEventListener("change", changeSky);
 });
 }
 
