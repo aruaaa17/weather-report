@@ -71,7 +71,6 @@ const getRealtimeTemp = () => {
                 params: {
                     "lat": lat,
                     "lon": lon,
-                    "units": "imperial"
                 }
             })
             .then(function (response) {
