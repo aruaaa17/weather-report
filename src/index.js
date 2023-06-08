@@ -77,7 +77,7 @@ const getRealtimeTemp = () => {
             .then(function (response) {
                 const kelvinTemp = response.data.main.temp;
                 const fahrenheitTemp = convertKToF(kelvinTemp);
-                console.log(fahrenheitTemp);
+                return fahrenheitTemp;
             })
             .catch(function(error) {
                 console.log(error);
