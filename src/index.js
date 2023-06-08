@@ -44,6 +44,7 @@ const changeTempColor = () => {
     }
 }
 
+/*
 const getRealtimeTemp = () => {
     const headerCityName = document.querySelector("#headerCityName");
 
@@ -79,18 +80,55 @@ const getRealtimeTemp = () => {
             console.log(error);
         })
 }
+*/
+//  ============ TRY THIS =================
+const getRealtimeTemp = async () => {
+    const headerCityName = document.querySelector("#headerCityName");
+
+    try {
+        // throw new Error('my error')
+        // Calling web proxy server to call LocationIQ API
+        const locationResponse = await axios.get("http://127.0.0.1:5000/location", {
+            params: {
+                q: headerCityName.innerHTML
+            }
+        })
+            
+        const lat = locationResponse.data[0]['lat'];
+        const lon = locationResponse.data[0]['lon'];
+        console.log(lat);
+        console.log(lon);
+
+        // Calling web proxy server to call Open Weather API
+        const weatherResponse = await axios.get("http://127.0.0.1:5000/weather", {
+            params: {
+                "lat": lat,
+                "lon": lon,
+            }
+        })
+        const kelvinTemp = weatherResponse.data.main.temp;
+        const fahrenheitTemp = convertKToF(kelvinTemp);
+        tempValue.innerHTML = Math.round(fahrenheitTemp);
+    } catch(e){
+        console.error(e.message)
+    }
+}
+
+
 
 const convertKToF = (temp) => {
     return (temp-273.15) * 9/5 + 32;
 }
 
 const changeSky = () => {
-    if (skySelection.option.innerHTML === "Sunny") {
+    const sky = document.querySelector("#sky")
+    console.log('test')
+    if (skySelection.value === "Sunny") {
         sky.innerHTML = "☁️ ☁️ ☁️ ☀️ ☁️ ☁️";
-    } else if (skySelection.option.innerHTML === "Cloudy") {
+    } else if (skySelection.value === "Cloudy") {
         sky.innerHTML = "☁️☁️ ☁️ ☁️☁️ ☁️ 🌤 ☁️ ☁️☁️";
-    } else if (skySelection.option.innerHTML === "Rainy") {
-        sky.innerHTML = "🌧🌈⛈🌧🌧💧⛈🌧🌦🌧💧🌧🌧";
+    } else if (skySelection.value === "Rainy") {
+        sky.innerHTML = "🌧🌈⛈️🌧🌧💧⛈️🌧🌦🌧💧🌧🌧";
     } else {
         sky.innerHTML = "🌨❄️🌨🌨❄️❄️🌨❄️🌨❄️❄️🌨🌨";
     }
@@ -110,12 +148,12 @@ const registerEventHandlers = () => {
     const realtimeTemp = document.querySelector("#tempButton");
 
     // Select the drop down menu for the sky
-    const skySelection = document.querySelector("#skySelect");
+    // const skySelection = document.querySelector("#skySelect");
     
     // Add click event to buttons
     incrementTemp.addEventListener("click", increaseTemp);
     decrementTemp.addEventListener("click", decreaseTemp);
-    tempValue.innerHTML = state.temp;
+    // tempValue.innerHTML = state.temp;
     realtimeTemp.addEventListener("click", getRealtimeTemp);
 
     // Add an event listener for the 'input' event
@@ -123,9 +161,14 @@ const registerEventHandlers = () => {
     // Code to execute when text is typed or changed in the input box
     headerCityName.innerHTML = event.target.value;
     // Change the sky when user selects a sky option in the dropdown menu
-    skySelection.addEventListener("change", changeSky);
-});
-}
+    // skySelection.addEventListener("change", changeSky);
+    });
+
+};
 
 document.addEventListener("DOMContentLoaded", registerEventHandlers);
 
+// Select the drop down menu for the sky
+const skySelection = document.querySelector("#skySelect");
+// Change the sky when user selects a sky option in the dropdown menu
+skySelection.addEventListener("change", changeSky);
