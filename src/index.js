@@ -1,5 +1,6 @@
 const state = {
-    temp: 72
+    temp: 72,
+    defaultCity: 'Seattle'
 };
 
 const increaseTemp = () => {
@@ -58,8 +59,8 @@ const getRealtimeTemp = async () => {
             
         const lat = locationResponse.data[0]['lat'];
         const lon = locationResponse.data[0]['lon'];
-        console.log(lat);
-        console.log(lon);
+        // console.log(lat);
+        // console.log(lon);
 
         // Calling web proxy server to call Open Weather API
         const weatherResponse = await axios.get("http://127.0.0.1:5000/weather", {
@@ -75,7 +76,6 @@ const getRealtimeTemp = async () => {
         console.error(e.message)
     }
 }
-
 
 const convertKToF = (temp) => {
     return (temp-273.15) * 9/5 + 32;
@@ -95,6 +95,10 @@ const changeSky = () => {
     }
 };
 
+const resetCityName = () => {
+    cityNameInput.value = state.defaultCity;
+};
+
 const registerEventHandlers = () => {
     // Select increment and decrement buttons
     const incrementTemp = document.getElementById("increaseTempControl");
@@ -107,12 +111,16 @@ const registerEventHandlers = () => {
 
     // Select the Get Realtime Temperature button
     const realtimeTemp = document.querySelector("#tempButton");
-    
+
+    // Select the drop down menu for the sky
+    // const skySelection = document.querySelector("#skySelect");
+
+    // Select the 'Reset' button 
+    const resetButton = document.querySelector("#cityNameReset");
     
     // Add click event to buttons
     incrementTemp.addEventListener("click", increaseTemp);
     decrementTemp.addEventListener("click", decreaseTemp);
-    // tempValue.innerHTML = state.temp;
     realtimeTemp.addEventListener("click", getRealtimeTemp);
 
     // Add an event listener for the 'input' event
@@ -120,12 +128,16 @@ const registerEventHandlers = () => {
     // Code to execute when text is typed or changed in the input box
     headerCityName.innerHTML = event.target.value;
     });
+    // // Change the sky when user selects a sky option in the dropdown menu
+    // skySelection.addEventListener("change", changeSky);
 
-};
+    // Change the city name to default value (Seattle)
+    resetButton.addEventListener("click", resetCityName);
+}
 
 document.addEventListener("DOMContentLoaded", registerEventHandlers);
 
-// Select the drop down menu for the sky
+// // Select the drop down menu for the sky
 const skySelection = document.querySelector("#skySelect");
-// Change the sky when user selects a sky option in the dropdown menu
+// // Change the sky when user selects a sky option in the dropdown menu
 skySelection.addEventListener("change", changeSky);
