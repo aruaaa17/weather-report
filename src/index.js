@@ -75,7 +75,9 @@ const getRealtimeTemp = () => {
                 }
             })
             .then(function (response) {
-                const currentTemp = response.data.main.temp;
+                const kelvinTemp = response.data.main.temp;
+                const fahrenheitTemp = convertKToF(kelvinTemp);
+                console.log(fahrenheitTemp);
             })
             .catch(function(error) {
                 console.log(error);
@@ -84,6 +86,10 @@ const getRealtimeTemp = () => {
         .catch(function (error) {
             console.log(error);
         })
+}
+
+const convertKToF = (temp) => {
+    return (temp-273.15) * 9/5 + 32;
 }
 
 const registerEventHandlers = () => {
