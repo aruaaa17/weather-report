@@ -44,44 +44,6 @@ const changeTempColor = () => {
     }
 }
 
-/*
-const getRealtimeTemp = () => {
-    const headerCityName = document.querySelector("#headerCityName");
-
-    // Calling web proxy server to call LocationIQ API
-    axios.get("http://127.0.0.1:5000/location", {
-        params: {
-            q: headerCityName.innerHTML
-        }
-    })
-        .then(function (response) {
-            const lat = response.data[0]['lat'];
-            const lon = response.data[0]['lon'];
-            console.log(lat);
-            console.log(lon);
-
-            // Calling web proxy server to call Open Weather API
-            axios.get("http://127.0.0.1:5000/weather", {
-                params: {
-                    "lat": lat,
-                    "lon": lon,
-                }
-            })
-            .then(function (response) {
-                const kelvinTemp = response.data.main.temp;
-                const fahrenheitTemp = convertKToF(kelvinTemp);
-                tempValue.innerHTML = Math.round(fahrenheitTemp);
-            })
-            .catch(function(error) {
-                console.log(error);
-            })
-        })
-        .catch(function (error) {
-            console.log(error);
-        })
-}
-*/
-//  ============ TRY THIS =================
 const getRealtimeTemp = async () => {
     const headerCityName = document.querySelector("#headerCityName");
 
@@ -115,7 +77,6 @@ const getRealtimeTemp = async () => {
 }
 
 
-
 const convertKToF = (temp) => {
     return (temp-273.15) * 9/5 + 32;
 }
@@ -146,9 +107,7 @@ const registerEventHandlers = () => {
 
     // Select the Get Realtime Temperature button
     const realtimeTemp = document.querySelector("#tempButton");
-
-    // Select the drop down menu for the sky
-    // const skySelection = document.querySelector("#skySelect");
+    
     
     // Add click event to buttons
     incrementTemp.addEventListener("click", increaseTemp);
@@ -160,8 +119,6 @@ const registerEventHandlers = () => {
     cityNameInput.addEventListener("input", function(event) {
     // Code to execute when text is typed or changed in the input box
     headerCityName.innerHTML = event.target.value;
-    // Change the sky when user selects a sky option in the dropdown menu
-    // skySelection.addEventListener("change", changeSky);
     });
 
 };
