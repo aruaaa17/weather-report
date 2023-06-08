@@ -1,10 +1,9 @@
+
+
 const state = {
     temp: 72
 };
 
-// Default value 72;
-// let temp = 72;
-// tempValue.innerHTML = temp;
 
 const increaseTemp = () => {
     state.temp++;
@@ -17,7 +16,6 @@ const decreaseTemp = () => {
     tempValue.innerHTML = state.temp;
     changeTempColor();
 }
-
 
 // Change the color of the temperature text
 const tempValue = document.querySelector("#tempValue");
@@ -49,9 +47,28 @@ const changeTempColor = () => {
     }
 }
 
+const getRealtimeTemp = () => {
+// When button is clicked, update and display realtime temp of the currently displayed city name
+// Get the latitude and longitude of a city using LocationIQ
+// Use the latitude and longitude to get current weather data from OpenWeather
+// The web proxy does both of these requests
+    const headerCityName = document.querySelector("#headerCityName");
 
-
-
+    axios.get("http://127.0.0.1:5000/location", {
+        params: {
+            q: headerCityName.innerHTML
+        }
+    })
+        .then(function (response) {
+            const lat = response.data[0]['lat'];
+            const lon = response.data[0]['lon'];
+            console.log(lat);
+            console.log(lon);
+        })
+        .catch(function (error) {
+            console.log(error);
+        })
+}
 
 const registerEventHandlers = () => {
     // Select increment and decrement buttons
@@ -63,10 +80,14 @@ const registerEventHandlers = () => {
     const cityNameInput = document.querySelector("#cityNameInput");
     const headerCityName = document.querySelector("#headerCityName");
 
+    // // Select the Get Realtime Temperature button
+    const realtimeTemp = document.querySelector("#tempButton");
+
     // Add click event to buttons
     incrementTemp.addEventListener("click", increaseTemp);
     decrementTemp.addEventListener("click", decreaseTemp);
     tempValue.innerHTML = state.temp;
+    realtimeTemp.addEventListener("click", getRealtimeTemp);
 
     // Add an event listener for the 'input' event
     cityNameInput.addEventListener("input", function(event) {
@@ -76,3 +97,4 @@ const registerEventHandlers = () => {
 }
 
 document.addEventListener("DOMContentLoaded", registerEventHandlers);
+
