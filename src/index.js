@@ -54,6 +54,7 @@ const getRealtimeTemp = () => {
 // The web proxy does both of these requests
     const headerCityName = document.querySelector("#headerCityName");
 
+    // Calling web proxy server to call LocationIQ
     axios.get("http://127.0.0.1:5000/location", {
         params: {
             q: headerCityName.innerHTML
@@ -64,6 +65,21 @@ const getRealtimeTemp = () => {
             const lon = response.data[0]['lon'];
             console.log(lat);
             console.log(lon);
+
+            // Calling web proxy server to call Open Weather
+            axios.get("http://127.0.0.1:5000/weather", {
+                params: {
+                    "lat": lat,
+                    "lon": lon,
+                    "units": "imperial"
+                }
+            })
+            .then(function (response) {
+                const currentTemp = response.data.main.temp;
+            })
+            .catch(function(error) {
+                console.log(error);
+            })
         })
         .catch(function (error) {
             console.log(error);
