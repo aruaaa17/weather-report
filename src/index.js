@@ -49,16 +49,30 @@ const changeTempColor = () => {
     }
 }
 
+
+
+
+
 const registerEventHandlers = () => {
     // Select increment and decrement buttons
     const incrementTemp = document.getElementById("increaseTempControl");
     const decrementTemp = document.getElementById("decreaseTempControl");
     const tempValue = document.querySelector("#tempValue");
+    
+    // Select the input element (typing in the city name)
+    const cityNameInput = document.querySelector("#cityNameInput");
+    const headerCityName = document.querySelector("#headerCityName");
 
     // Add click event to buttons
     incrementTemp.addEventListener("click", increaseTemp);
     decrementTemp.addEventListener("click", decreaseTemp);
     tempValue.innerHTML = state.temp;
+
+    // Add an event listener for the 'input' event
+    cityNameInput.addEventListener("input", function(event) {
+    // Code to execute when text is typed or changed in the input box
+    headerCityName.innerHTML = event.target.value;
+});
 }
 
 document.addEventListener("DOMContentLoaded", registerEventHandlers);
