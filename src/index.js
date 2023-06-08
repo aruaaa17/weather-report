@@ -1,9 +1,6 @@
-
-
 const state = {
     temp: 72
 };
-
 
 const increaseTemp = () => {
     state.temp++;
@@ -48,13 +45,9 @@ const changeTempColor = () => {
 }
 
 const getRealtimeTemp = () => {
-// When button is clicked, update and display realtime temp of the currently displayed city name
-// Get the latitude and longitude of a city using LocationIQ
-// Use the latitude and longitude to get current weather data from OpenWeather
-// The web proxy does both of these requests
     const headerCityName = document.querySelector("#headerCityName");
 
-    // Calling web proxy server to call LocationIQ
+    // Calling web proxy server to call LocationIQ API
     axios.get("http://127.0.0.1:5000/location", {
         params: {
             q: headerCityName.innerHTML
@@ -66,7 +59,7 @@ const getRealtimeTemp = () => {
             console.log(lat);
             console.log(lon);
 
-            // Calling web proxy server to call Open Weather
+            // Calling web proxy server to call Open Weather API
             axios.get("http://127.0.0.1:5000/weather", {
                 params: {
                     "lat": lat,
@@ -76,7 +69,7 @@ const getRealtimeTemp = () => {
             .then(function (response) {
                 const kelvinTemp = response.data.main.temp;
                 const fahrenheitTemp = convertKToF(kelvinTemp);
-                return fahrenheitTemp;
+                tempValue.innerHTML = Math.round(fahrenheitTemp);
             })
             .catch(function(error) {
                 console.log(error);
