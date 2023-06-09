@@ -82,20 +82,23 @@ const convertKToF = (temp) => {
 }
 
 const changeSky = () => {
-    const sky = document.querySelector("#sky")
-    console.log('test')
+    const sky = document.querySelector("#sky");
+    const gardenContent = document.getElementById("gardenContent");
+
     if (skySelection.value === "Sunny") {
         sky.innerHTML = "☁️ ☁️ ☁️ ☀️ ☁️ ☁️";
-        garden__content.classList.replace("sunny");
+        gardenContent.classList.replace(gardenContent.classList[1], "sunny");
+
     } else if (skySelection.value === "Cloudy") {
         sky.innerHTML = "☁️☁️ ☁️ ☁️☁️ ☁️ 🌤 ☁️ ☁️☁️";
-        garden__content.classList.replace("cloudy");
+        gardenContent.classList.replace(gardenContent.classList[1], "cloudy");
+
     } else if (skySelection.value === "Rainy") {
         sky.innerHTML = "🌧🌈⛈️🌧🌧💧⛈️🌧🌦🌧💧🌧🌧";
-        garden__content.classList.replace("rainy");
+        gardenContent.classList.replace(gardenContent.classList[1], "rainy");
     } else {
         sky.innerHTML = "🌨❄️🌨🌨❄️❄️🌨❄️🌨❄️❄️🌨🌨";
-        garden__content.classList.replace("snowy");
+        gardenContent.classList.replace(gardenContent.classList[1], "snowy");
     }
 };
 
@@ -141,7 +144,7 @@ const registerEventHandlers = () => {
 
 document.addEventListener("DOMContentLoaded", registerEventHandlers);
 
-// // Select the drop down menu for the sky
+// Select the drop down menu for the sky
 const skySelection = document.querySelector("#skySelect");
-// // Change the sky when user selects a sky option in the dropdown menu
+// Change the sky when user selects a sky option in the dropdown menu
 skySelection.addEventListener("change", changeSky);
