@@ -86,12 +86,16 @@ const changeSky = () => {
     console.log('test')
     if (skySelection.value === "Sunny") {
         sky.innerHTML = "☁️ ☁️ ☁️ ☀️ ☁️ ☁️";
+        garden__content.classList.replace("sunny");
     } else if (skySelection.value === "Cloudy") {
         sky.innerHTML = "☁️☁️ ☁️ ☁️☁️ ☁️ 🌤 ☁️ ☁️☁️";
+        garden__content.classList.replace("cloudy");
     } else if (skySelection.value === "Rainy") {
         sky.innerHTML = "🌧🌈⛈️🌧🌧💧⛈️🌧🌦🌧💧🌧🌧";
+        garden__content.classList.replace("rainy");
     } else {
         sky.innerHTML = "🌨❄️🌨🌨❄️❄️🌨❄️🌨❄️❄️🌨🌨";
+        garden__content.classList.replace("snowy");
     }
 };
 
