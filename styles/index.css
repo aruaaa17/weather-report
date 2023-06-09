@@ -81,15 +81,15 @@ h2 {
 }
 
 .yellow {
-    color: yellow;
+    color: #FFE194;
 }
 
 .green {
-    color: green
+    color: green;
 }
 
 .light-blue {
-    color: rgb(180, 214, 255)
+    color: rgb(180, 214, 255);
 }
 
 .garden__section {

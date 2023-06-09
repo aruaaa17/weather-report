@@ -15,15 +15,12 @@ const decreaseTemp = () => {
     changeTempColor();
 }
 
-// Change the color of the temperature text
-const tempValue = document.querySelector("#tempValue");
-
-// Change the landscape based on the temperature
-const landscape = document.querySelector("#landscape");
-
+// Change temp text color and landscape emoji based on temp
 const changeTempColor = () => {
+    const tempValue = document.querySelector("#tempValue");
+    const landscape = document.querySelector("#landscape");
+
     tempValue.classList.remove("red", "orange", "yellow", "green", "light-blue");
-    
     if (state.temp >= 80) {
         tempValue.classList.add("red");
         landscape.innerHTML = "🌵__🐍_🦂_🌵🌵__🐍_🏜_🦂";
@@ -49,7 +46,6 @@ const getRealtimeTemp = async () => {
     const headerCityName = document.querySelector("#headerCityName");
 
     try {
-        // throw new Error('my error')
         // Calling web proxy server to call LocationIQ API
         const locationResponse = await axios.get("http://127.0.0.1:5000/location", {
             params: {
@@ -59,8 +55,6 @@ const getRealtimeTemp = async () => {
             
         const lat = locationResponse.data[0]['lat'];
         const lon = locationResponse.data[0]['lon'];
-        // console.log(lat);
-        // console.log(lon);
 
         // Calling web proxy server to call Open Weather API
         const weatherResponse = await axios.get("http://127.0.0.1:5000/weather", {
@@ -72,8 +66,11 @@ const getRealtimeTemp = async () => {
         const kelvinTemp = weatherResponse.data.main.temp;
         const fahrenheitTemp = convertKToF(kelvinTemp);
         tempValue.innerHTML = Math.round(fahrenheitTemp);
-    } catch(e){
-        console.error(e.message)
+        state.temp = Math.round(fahrenheitTemp);
+        changeTempColor();
+
+    } catch(error){
+        console.error(error.message)
     }
 }
 
@@ -81,10 +78,10 @@ const convertKToF = (temp) => {
     return (temp-273.15) * 9/5 + 32;
 }
 
-const changeSky = () => {
+const changeSky = (skySelection) => {
     const sky = document.querySelector("#sky");
     const gardenContent = document.getElementById("gardenContent");
-
+    
     if (skySelection.value === "Sunny") {
         sky.innerHTML = "☁️ ☁️ ☁️ ☀️ ☁️ ☁️";
         gardenContent.classList.replace(gardenContent.classList[1], "sunny");
@@ -104,6 +101,8 @@ const changeSky = () => {
 
 const resetCityName = () => {
     cityNameInput.value = state.defaultCity;
+    headerCityName.innerHTML = state.defaultCity;
+    getRealtimeTemp();
 };
 
 const registerEventHandlers = () => {
@@ -120,7 +119,7 @@ const registerEventHandlers = () => {
     const realtimeTemp = document.querySelector("#tempButton");
 
     // Select the drop down menu for the sky
-    // const skySelection = document.querySelector("#skySelect");
+    const skySelection = document.querySelector("#skySelect");
 
     // Select the 'Reset' button 
     const resetButton = document.querySelector("#cityNameReset");
@@ -132,19 +131,20 @@ const registerEventHandlers = () => {
 
     // Add an event listener for the 'input' event
     cityNameInput.addEventListener("input", function(event) {
-    // Code to execute when text is typed or changed in the input box
-    headerCityName.innerHTML = event.target.value;
+        // Code to execute when text is typed or changed in the input box
+        headerCityName.innerHTML = event.target.value;
     });
-    // // Change the sky when user selects a sky option in the dropdown menu
-    // skySelection.addEventListener("change", changeSky);
+    // Change the sky when user selects a sky option in the dropdown menu
+    skySelection.addEventListener("change", function() {
+        changeSky(skySelection);
+    });
 
     // Change the city name to default value (Seattle)
     resetButton.addEventListener("click", resetCityName);
+    // When the page loads, get the current temp of Seattle
+    getRealtimeTemp();
+    // When the page loads, the default city in "City Name" textbox is Seattle
+    cityNameInput.value = state.defaultCity;
 }
 
 document.addEventListener("DOMContentLoaded", registerEventHandlers);
-
-// Select the drop down menu for the sky
-const skySelection = document.querySelector("#skySelect");
-// Change the sky when user selects a sky option in the dropdown menu
-skySelection.addEventListener("change", changeSky);
